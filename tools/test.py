@@ -11,6 +11,7 @@ import os
 import cv2
 import torch
 import numpy as np
+import time
 
 from pysot.core.config import cfg
 from pysot.models.model_builder import ModelBuilder
@@ -37,6 +38,7 @@ args = parser.parse_args()
 torch.set_num_threads(1)
 
 def main():
+    start_time = time.time()
     # load config
     cfg.merge_from_file(args.config)
 
@@ -220,6 +222,10 @@ def main():
                         f.write(','.join([str(i) for i in x])+'\n')
             print('({:3d}) Video: {:12s} Time: {:5.1f}s Speed: {:3.1f}fps'.format(
                 v_idx+1, video.name, toc, idx / toc))
+
+    elapsed_time = time.time() - start_time
+    print(time.strftime("%H:%M:%S", time.gmtime(elapsed_time)))
+
 
 
 if __name__ == '__main__':

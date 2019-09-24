@@ -255,6 +255,8 @@ def train(train_loader, model, optimizer, lr_scheduler, tb_writer):
 
 
 def main():
+
+    start_time = time.time()
     rank, world_size = dist_init()
     logger.info("init done")
 
@@ -312,6 +314,9 @@ def main():
 
     # start training
     train(train_loader, dist_model, optimizer, lr_scheduler, tb_writer)
+    
+    elapsed_time = time.time() - start_time
+    print(time.strftime("%H:%M:%S", time.gmtime(elapsed_time)))
 
 
 if __name__ == '__main__':
